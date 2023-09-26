@@ -3,18 +3,33 @@ const app = express();
 const { Client } = require('pg');
 const port = 3001;
 
+app.use(express.json());
 
 app.get("/", (req, res) => {
     res.send("This is a express server");
 })
 
+app.post("/register", (req, res) => {
+    const username = req.body.userName
+    const email = req.body.emailId
+    const password = req.body.password
+    var insertQuery = `insert into usersinfo (username, emailid, password) VALUES ('${username}', '${email}', '${password}') returning username, id`
+    client.query(insertQuery, (err, result) => {
+        if (err) {
+            console.log("failure", err);
+        } else {
+            res.send(result);
+        }
+    })
+})
+
 app.get('/allUser', (req, res) => {
     var selectquery = 'select * from usersinfo';
     client.query(selectquery, (err, result) => {
-        if(err){
+        if (err) {
             res.send(err.message || err);
         }
-        else{
+        else {
             res.send(result.rows);
         }
     })
