@@ -37,6 +37,26 @@ app.get('/allUser', (req, res) => {
     })
 })
 
+app.post("/login", (req, res) => {
+    const email = req.body.emailId
+    const password = req.body.password
+    var insertQuery = `select * from usersinfo where emailid = '${email}' and password = '${password}'`;
+    client.query(insertQuery, (err, result) => {
+        if (err) {
+            console.log("failure", err);
+            res.send(err);
+        } else {
+            if (result) {
+                if(result.rowCount == 1){
+                    res.send(result);
+                }
+                else if(result.rowCount == 0){
+                    res.send(JSON.stringify({message: "Wrong email/password combination!"}))
+                }
+            }
+        }
+    })
+})
 const client = new Client({
     user: process.env.user,
     host: process.env.hostName,
