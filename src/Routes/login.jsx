@@ -1,11 +1,11 @@
-import React from 'react'
-import "./login.css"
-import { Link } from 'react-router-dom'
-import {ArrowRight} from "phosphor-react"
-function Login(){
+import React from "react";
+import "./login.css";
+import { Link } from "react-router-dom";
+import { ArrowRight } from "phosphor-react";
+function Login() {
   return (
     <div>
-        <div className="form-container">
+      <div className="form-container">
         <form className="register-form">
           <input
             class="form-field"
@@ -24,12 +24,13 @@ function Login(){
           </button>
         </form>
         <div className="links">
-        <Link to={"/"}>Signup <ArrowRight size={16} /></Link>
+          <Link to={"/"}>
+            Signup <ArrowRight size={16} />
+          </Link>
         </div>
-        
       </div>
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;
