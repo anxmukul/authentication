@@ -1,18 +1,12 @@
-import React from "react";
-import "./Registration.css";
-import { Link } from "react-router-dom";
+import React from 'react'
+import "./login.css"
+import { Link } from 'react-router-dom'
 import {ArrowRight} from "phosphor-react"
-function Registration() {
+function Login(){
   return (
-    <div className="Registration">
-      <div className="form-container">
+    <div>
+        <div className="form-container">
         <form className="register-form">
-          <input
-            class="form-field"
-            type="text"
-            placeholder="User Name"
-            name="userName"
-          />
           <input
             class="form-field"
             type="email"
@@ -26,15 +20,16 @@ function Registration() {
             name="password"
           />
           <button class="form-field" type="submit">
-            Register
+            Login
           </button>
         </form>
         <div className="links">
-        <Link to={"/login"}>Already have account <ArrowRight size={16} /></Link>
+        <Link to={"/"}>Signup <ArrowRight size={16} /></Link>
         </div>
+        
       </div>
     </div>
-  );
+  )
 }
 
-export default Registration;
+export default Login
