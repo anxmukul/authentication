@@ -1,28 +1,29 @@
 import { React, useState } from "react";
-import "./Registration.css";
+import "./login.css";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight } from "phosphor-react";
 import axios, * as others from "axios";
 
-function Registration() {
-  const [username, setUserName] = useState("");
+function Login() {
   const [emailid, setEmailId] = useState("");
   const [password, setPassword] = useState("");
+  const [loginStatus, setLoginStatus] = useState("");
   const navigate = useNavigate();
 
-  const register = (e) => {
+  const signin = (e) => {
     e.preventDefault();
 
-    console.log("Inside register funciton");
-    console.log(username);
     axios
-      .post("http://localhost:3001/register", {
-        userName: username,
+      .post("http://localhost:3001/login", {
         emailId: emailid,
         password: password,
       })
       .then((response) => {
-        navigate("/login");
+        if (response.data.rowCount > 0) {
+          navigate("/home");
+        } else {
+          setLoginStatus(response.data.message);
+        }
       })
       .catch(function (error) {
         console.error(error);
@@ -30,29 +31,21 @@ function Registration() {
   };
 
   return (
-    <div className="Registration">
+    <div>
       <div className="form-container">
-        <form className="register-form" onSubmit={register}>
+        <p className="invalidMessage">{loginStatus}</p>
+        <form className="register-form" onSubmit={signin}>
           <input
-            className="form-field"
-            type="text"
-            placeholder="User Name"
-            name="username"
-            onChange={(e) => {
-              setUserName(e.target.value);
-            }}
-          />
-          <input
-            className="form-field"
+            class="form-field"
             type="email"
             placeholder="Email"
-            name="emailid"
+            name="emailId"
             onChange={(e) => {
               setEmailId(e.target.value);
             }}
           />
           <input
-            className="form-field"
+            class="form-field"
             type="password"
             placeholder="Password"
             name="password"
@@ -60,13 +53,13 @@ function Registration() {
               setPassword(e.target.value);
             }}
           />
-          <button className="form-field" type="submit">
-            Register
+          <button class="form-field" type="submit">
+            Login
           </button>
         </form>
         <div className="links">
-          <Link to={"/login"}>
-            Already have account <ArrowRight size={16} />
+          <Link to={"/"}>
+            Signup <ArrowRight size={16} />
           </Link>
         </div>
       </div>
@@ -74,4 +67,4 @@ function Registration() {
   );
 }
 
-export default Registration;
+export default Login;
